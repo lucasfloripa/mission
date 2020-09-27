@@ -1,7 +1,8 @@
 import React from "react";
+import { useCountRenders } from "../src/hooks/useCountRenders";
 
 // Components
-import { Navbar } from '../src/components/Navbar'
+import { Navbar } from "../src/components/Navbar";
 
 const data = [
   { id: "1", productName: "todinho", productPrice: 3.5 },
@@ -10,7 +11,9 @@ const data = [
 ];
 
 const ProductList: React.FC = () => {
-  const handleInsertCart = () => {}
+  useCountRenders("ProductList");
+
+  const handleInsertCart = () => {};
 
   return (
     <section className="container">
@@ -21,7 +24,9 @@ const ProductList: React.FC = () => {
           <tr>
             <th scope="col">Nome</th>
             <th scope="col">Preço</th>
-            <th scope="col" className="text-center">Opções</th>
+            <th scope="col" className="text-center">
+              Opções
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -30,7 +35,12 @@ const ProductList: React.FC = () => {
               <th scope="row">{p.productName}</th>
               <td>R${p.productPrice}</td>
               <td className="d-flex justify-content-around">
-                <button className="btn rounded-circle btn-success" onClick={() => handleInsertCart()}>+</button>
+                <button
+                  className="btn rounded-circle btn-success"
+                  onClick={() => handleInsertCart()}
+                >
+                  +
+                </button>
               </td>
             </tr>
           ))}
