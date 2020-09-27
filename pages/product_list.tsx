@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useCountRenders } from "../src/hooks/useCountRenders";
 
 // Components
 import { Navbar } from "../src/components/Navbar";
-
-const data = [
-  { id: "1", productName: "todinho", productPrice: 3.5 },
-  { id: "2", productName: "douritos", productPrice: 10 },
-  { id: "3", productName: "pera", productPrice: 2 },
-];
+import Axios from "axios";
 
 const ProductList: React.FC = () => {
   useCountRenders("ProductList");
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const req = await Axios.get("/api/handleGetProducts").then(
+        (res) => res.data.products
+      );
+      setProducts(req);
+    }
+    fetchData();
+  }, [setProducts]);
 
   const handleInsertCart = () => {};
 
@@ -30,7 +37,7 @@ const ProductList: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((p) => (
+          {products?.map((p) => (
             <tr key={p.id}>
               <th scope="row">{p.productName}</th>
               <td>R${p.productPrice}</td>
