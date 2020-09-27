@@ -1,13 +1,10 @@
 import React, { FormEvent, useState } from "react";
 import Axios from "axios";
-import { useCountRenders } from "../src/hooks/useCountRenders";
 
 // Components
 import { Navbar } from "../src/components/Navbar";
 
 const ProductRegister: React.FC = () => {
-  useCountRenders("ProductRegister");
-
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(0);
 

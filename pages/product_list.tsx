@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useCountRenders } from "../src/hooks/useCountRenders";
 
 // Components
 import { Navbar } from "../src/components/Navbar";
@@ -7,8 +6,6 @@ import Axios from "axios";
 import CartContext from "../src/context/CartContext";
 
 const ProductList: React.FC = () => {
-  useCountRenders("ProductList");
-
   const { products } = useContext(CartContext);
 
   const [productsList, setProductsList] = useState([]);

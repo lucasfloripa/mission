@@ -1,4 +1,3 @@
-import Axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import CartContext from "../src/context/CartContext";
 
@@ -14,7 +13,7 @@ const ProductCart: React.FC = () => {
     const priceArr = products.map((item) => item.productPrice * item.amount);
     const totalValue = priceArr.reduce((acc, cur) => acc + cur, 0);
     setTotalValue(totalValue);
-  }, [products]);
+  }, [products, setTotalValue]);
 
   return (
     <section className="container">
