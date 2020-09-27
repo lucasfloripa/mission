@@ -1,26 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useCountRenders } from "../src/hooks/useCountRenders";
 
 // Components
 import { Navbar } from "../src/components/Navbar";
 import Axios from "axios";
+import CartContext from "../src/context/CartContext";
 
 const ProductList: React.FC = () => {
   useCountRenders("ProductList");
 
-  const [products, setProducts] = useState([]);
+  const { products } = useContext(CartContext);
+
+  const [productsList, setProductsList] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const req = await Axios.get("/api/handleGetProducts").then(
         (res) => res.data.products
       );
-      setProducts(req);
+      setProductsList(req);
     }
     fetchData();
-  }, [setProducts]);
+  }, [setProductsList]);
 
-  const handleInsertCart = () => {};
+  const handleInsertCart = (p) => {
+    const ids = products.map((p) => p._id);
+
+    if (!ids.includes(p._id)) {
+      products.push({...p, amount: 1});
+    } else {
+      products.filter(pr => pr._id === p._id ? pr.amount++ : pr)
+    }
+  };
 
   return (
     <section className="container">
@@ -37,14 +48,14 @@ const ProductList: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {products?.map((p) => (
-            <tr key={p.id}>
+          {productsList?.map((p) => (
+            <tr key={p._id}>
               <th scope="row">{p.productName}</th>
               <td>R${p.productPrice}</td>
               <td className="d-flex justify-content-around">
                 <button
                   className="btn rounded-circle btn-success"
-                  onClick={() => handleInsertCart()}
+                  onClick={() => handleInsertCart(p)}
                 >
                   +
                 </button>

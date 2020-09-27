@@ -1,5 +1,6 @@
 import Axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import CartContext from "../src/context/CartContext";
 
 // Components
 import { Navbar } from "../src/components/Navbar";
@@ -7,11 +8,13 @@ import { Navbar } from "../src/components/Navbar";
 const ProductCart: React.FC = () => {
   const [totalValue, setTotalValue] = useState(0);
 
-  // useEffect(() => {
-  //   const priceArr = products.map((item) => item.productPrice * item.amount);
-  //   const totalValue = priceArr.reduce((acc, cur) => acc + cur, 0);
-  //   setTotalValue(totalValue);
-  // }, [products]);
+  const { products } = useContext(CartContext);
+
+  useEffect(() => {
+    const priceArr = products.map((item) => item.productPrice * item.amount);
+    const totalValue = priceArr.reduce((acc, cur) => acc + cur, 0);
+    setTotalValue(totalValue);
+  }, [products]);
 
   return (
     <section className="container">
@@ -26,12 +29,12 @@ const ProductCart: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {/* {products?.map((p) => (
-            <tr key={p.id}>
+          {products?.map((p) => (
+            <tr key={p._id}>
               <th scope="row">{p.productName}</th>
               <td>{p.amount}</td>
             </tr>
-          ))} */}
+          ))}
         </tbody>
       </table>
     </section>
